@@ -5,7 +5,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class LifecycleTest {
+class LifecycleTest {
     @BeforeEach
     void setUp() {
         System.out.println("Before each test");
