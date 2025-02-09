@@ -1,4 +1,4 @@
-package io.github.dursunkoc;
+package io.github.dursunkoc.mocks;
 
 public class Service {
     private final Dependency dependency;
