@@ -21,9 +21,6 @@ class ServiceTest {
     @Spy
     MapperImpl mapper;
 
-    @Captor
-    ArgumentCaptor<Data> captor;
-
     @Test
     void testProcessWhenDataIsNotAvailableShouldProcessEmptyData() {
         when(dependency.getData()).thenReturn(new Data(""));
@@ -41,11 +38,14 @@ class ServiceTest {
     @Test
     void testProcessAndMapWhenDataIsNullShouldReturnLengthOfEmptyDataResult() {
         when(dependency.getData()).thenReturn(new Data(""));
+
+        when(mapper.map(argThat(data->data.getData().contains(" - ")))).thenReturn(2);
+
         int actual = service.processAndMapResult();
-        assertEquals(13, actual);
-        //verify(mapper, times(1)).map(new Data("Processing - "));
-        verify(mapper, times(1)).map(captor.capture());
-        assertEquals("Processing - ", captor.getValue().getData());
+        assertEquals(2, actual);
+
+        verify(mapper, times(1))
+                .map(ArgumentMatchers.argThat(data -> data.getData().equals("Processing - ")));
     }
 
 }
