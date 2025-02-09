@@ -5,11 +5,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ServiceTest {
@@ -19,9 +20,12 @@ class ServiceTest {
     @Mock
     Dependency dependency;
 
+    @Spy
+    MapperImpl mapper;
+
     @BeforeEach
     void setUp() {
-        ReflectionTestUtils.setField(service, "mapper", new MapperImpl());
+        //ReflectionTestUtils.setField(service, "mapper", new MapperImpl());
     }
 
     @Test
@@ -43,6 +47,7 @@ class ServiceTest {
         when(dependency.getData()).thenReturn("");
         int actual = service.processAndMapResult();
         assertEquals(13, actual);
+        verify(mapper, times(1)).map("Processing - ");
     }
 
 
