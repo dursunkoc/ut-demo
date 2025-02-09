@@ -43,7 +43,9 @@ class ServiceTest {
         when(dependency.getData()).thenReturn(new Data(""));
         int actual = service.processAndMapResult();
         assertEquals(13, actual);
-        verify(mapper, times(1)).map(new Data("Processing - "));
+        //verify(mapper, times(1)).map(new Data("Processing - "));
+        verify(mapper, times(1)).map(captor.capture());
+        assertEquals("Processing - ", captor.getValue().getData());
     }
 
 }
