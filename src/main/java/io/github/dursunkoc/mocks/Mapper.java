@@ -1,5 +1,5 @@
 package io.github.dursunkoc.mocks;
 
 public interface Mapper {
-    int map(String value);
+    int map(Data value);
 }

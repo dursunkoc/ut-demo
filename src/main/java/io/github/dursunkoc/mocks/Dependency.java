@@ -1,7 +1,7 @@
 package io.github.dursunkoc.mocks;
 
 public class Dependency {
-    public String getData() {
-        return "The Real Data!";
+    public Data getData() {
+        return new Data("The Real Data!");
     }
 }

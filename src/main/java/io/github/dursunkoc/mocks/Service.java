@@ -9,9 +9,9 @@ public class Service {
         this.mapper = mapper;
     }
 
-    public String process() {
-       String data =  dependency.getData();
-        return "Processing - " + data;
+    public Data process() {
+       Data data =  dependency.getData();
+        return new Data("Processing - " + data.getData());
     }
 
     public int processAndMapResult() {

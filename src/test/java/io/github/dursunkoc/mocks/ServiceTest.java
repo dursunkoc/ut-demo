@@ -3,9 +3,7 @@ package io.github.dursunkoc.mocks;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Spy;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -23,32 +21,29 @@ class ServiceTest {
     @Spy
     MapperImpl mapper;
 
-    @BeforeEach
-    void setUp() {
-        //ReflectionTestUtils.setField(service, "mapper", new MapperImpl());
-    }
+    @Captor
+    ArgumentCaptor<Data> captor;
 
     @Test
     void testProcessWhenDataIsNotAvailableShouldProcessEmptyData() {
-        when(dependency.getData()).thenReturn("");
-        String actual = service.process();
-        assertEquals("Processing - ", actual);
+        when(dependency.getData()).thenReturn(new Data(""));
+        Data actual = service.process();
+        assertEquals("Processing - ", actual.getData());
     }
 
     @Test
     void testProcessWhenDataIsAvailableShouldProcessTheData() {
-        when(dependency.getData()).thenReturn("the data");
-        String actual = service.process();
-        assertEquals("Processing - the data", actual);
+        when(dependency.getData()).thenReturn(new Data("the data"));
+        Data actual = service.process();
+        assertEquals("Processing - the data", actual.getData());
     }
 
     @Test
     void testProcessAndMapWhenDataIsNullShouldReturnLengthOfEmptyDataResult() {
-        when(dependency.getData()).thenReturn("");
+        when(dependency.getData()).thenReturn(new Data(""));
         int actual = service.processAndMapResult();
         assertEquals(13, actual);
-        verify(mapper, times(1)).map("Processing - ");
+        verify(mapper, times(1)).map(new Data("Processing - "));
     }
-
 
 }
